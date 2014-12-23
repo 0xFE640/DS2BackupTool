@@ -7,64 +7,97 @@
 
     public partial class MainForm : Form
     {
+        private readonly KeyboardHook hook = new KeyboardHook();
         string save_path = @"C:\temp";
+        readonly  string fileName = Path.Combine((Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)),
+              "DarkSoulsII", "0110000102ee03bd", "DARKSII0000.sl2");
         Dictionary<int, string> dic;
         public MainForm()
         {
             InitializeComponent();
             ShowInTaskbar = false;
             dic = new Dictionary<int, string>();
-
+            hook.KeyPressed += HookKeyPressed;
+            hook.RegisterHotKey(new ModifierKeys(), Keys.F5);
+            hook.RegisterHotKey(new ModifierKeys(), Keys.F8);
         }
 
-        public void showFiles()
+        private void HookKeyPressed(object sender, KeyPressedEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Keys.F5:
+                    BackupSave();
+                    break;
+                case Keys.F8:
+                    LoadSave();
+                    break;
+            }
+        }
+
+
+        private void showFiles()
         {
             listBox1.Items.Clear();
-            
+            dic.Clear();
             foreach (string s in Directory.GetFiles(save_path))
             {
-                listBox1.Items.Add(Path.GetFileName(s) + "     " + File.GetLastWriteTime(s));
+                listBox1.Items.Add(Path.GetFileName(s) + "    " + File.GetLastWriteTime(s));
                 if (listBox1.Items.Count - 1 >= 0)
                     dic.Add(listBox1.Items.Count-1, s);
             }
+            listBox1.SelectedIndex = listBox1.Items.Count - 1;
             
         }
+        private void BackupSave()
+        {
+            string[] files = Directory.GetFiles(save_path);
+            File.Copy(fileName, @"C:\temp\DARKSII0000.sl2" + "_" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss.f"));
+            showFiles();
 
+        }
+        private void LoadSave()
+        {
+            File.Copy(dic[listBox1.SelectedIndex], fileName, true);
+            listBox1.SelectedIndex = listBox1.Items.Count-1;
+
+        }
 
         private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
         {
             Show();
-            WindowState = FormWindowState.Normal;
+            if (WindowState == FormWindowState.Minimized)
+                WindowState = FormWindowState.Normal;
+            else
+                WindowState = FormWindowState.Minimized;
         }
 
         private void loadButtonClick(object sender, EventArgs e)
         {
-            MessageBox.Show(dic[listBox1.SelectedIndex]);
+         //   MessageBox.Show(DateTime.Now.ToString("yyyy-MM-dd_HH:mm:ss"));
+           LoadSave();
+
+
         }
 
         private void backupButtonClick(object sender, EventArgs e)
         {
-           
-            string[] files = Directory.GetFiles(save_path);
-        //    listBox1.Items.Clear();
-            var fileName = Path.Combine((Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)), "Test", "Temp", "file1.txt");
-            //MessageBox.Show(fileName);
-            File.Copy(fileName, @"C:\temp\copied.txt"+"_" + files.Length);
+            BackupSave();
             
-            showFiles();
         }
 
         private void DeleteButtonClick(object sender, EventArgs e)
         {
-            foreach (string s in Directory.GetFiles(save_path))
-                File.Delete(s);
+         //   foreach (string s in Directory.GetFiles(save_path))
+            File.Delete(dic[listBox1.SelectedIndex]);
             listBox1.Items.Clear();
             showFiles();
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-          //  showFiles();
+            showFiles();
+            listBox1.SelectedIndex = listBox1.Items.Count - 1;
         }
     }
 }
