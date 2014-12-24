@@ -4,6 +4,7 @@
     using System.Windows.Forms;
     using System.IO;
     using System.Collections.Generic;
+    using System.Media;
 
     public partial class MainForm : Form
     {
@@ -12,11 +13,14 @@
         readonly  string fileName = Path.Combine((Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)),
               "DarkSoulsII", "0110000102ee03bd", "DARKSII0000.sl2");
         Dictionary<int, string> dic;
+        SoundPlayer simpleSound;
+
         public MainForm()
         {
             InitializeComponent();
             ShowInTaskbar = false;
             dic = new Dictionary<int, string>();
+            simpleSound = new SoundPlayer(@"c:\Windows\Media\chimes.wav");
             hook.KeyPressed += HookKeyPressed;
             hook.RegisterHotKey(new ModifierKeys(), Keys.F5);
             hook.RegisterHotKey(new ModifierKeys(), Keys.F8);
@@ -34,7 +38,6 @@
                     break;
             }
         }
-
 
         private void showFiles()
         {
@@ -58,8 +61,16 @@
         }
         private void LoadSave()
         {
-            File.Copy(dic[listBox1.SelectedIndex], fileName, true);
-            listBox1.SelectedIndex = listBox1.Items.Count-1;
+            var count = listBox1.Items.Count;
+            if (count > 0)
+            {
+                File.Copy(dic[listBox1.SelectedIndex], fileName, true);
+                listBox1.SelectedIndex = count - 1;
+                label2.Text = "Save is restored  " + dic[listBox1.SelectedIndex];
+                simpleSound.Play();
+            }
+            else
+                MessageBox.Show("Backups not found");
 
         }
 
@@ -89,9 +100,12 @@
         private void DeleteButtonClick(object sender, EventArgs e)
         {
          //   foreach (string s in Directory.GetFiles(save_path))
-            File.Delete(dic[listBox1.SelectedIndex]);
-            listBox1.Items.Clear();
-            showFiles();
+            if (listBox1.Items.Count > 0)
+            {
+                File.Delete(dic[listBox1.SelectedIndex]);
+                listBox1.Items.Clear();
+                showFiles();
+            }
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
