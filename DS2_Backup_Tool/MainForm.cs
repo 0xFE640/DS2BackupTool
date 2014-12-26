@@ -29,6 +29,7 @@
             ShowInTaskbar = false;
             dic = new Dictionary<int, string>();
             simpleSound = new SoundPlayer(@"c:\Windows\Media\chimes.wav");
+            openFileDialog1.InitialDirectory = Path.Combine((Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)),"DarkSoulsII");
             hook.KeyPressed += HookKeyPressed;
             hook.RegisterHotKey(new ModifierKeys(), Keys.F5);
             hook.RegisterHotKey(new ModifierKeys(), Keys.F8);
@@ -49,15 +50,15 @@
 
         private void showFiles()
         {
-            listBox1.Items.Clear();
+            savesListBox.Items.Clear();
             dic.Clear();
             foreach (var s in Directory.GetFiles(save_path))
             {
-                listBox1.Items.Add(Path.GetFileName(s) + "    " + File.GetLastWriteTime(s));
-                if (listBox1.Items.Count - 1 >= 0)
-                    dic.Add(listBox1.Items.Count - 1, s);
+                savesListBox.Items.Add(Path.GetFileName(s) + "    " + File.GetLastWriteTime(s));
+                if (savesListBox.Items.Count - 1 >= 0)
+                    dic.Add(savesListBox.Items.Count - 1, s);
             }
-            listBox1.SelectedIndex = listBox1.Items.Count - 1;
+            savesListBox.SelectedIndex = savesListBox.Items.Count - 1;
         }
 
         private void BackupSave()
@@ -65,17 +66,19 @@
             Directory.GetFiles(save_path);
             File.Copy(fileName, @"C:\temp\DARKSII0000.sl2" + "_" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss.f"));
             showFiles();
-            label2.Text = @"The save was backed up";
+           // label2.Text = @"The save was backed up";
+            statusLabel.Text = @"The save was backed up";
         }
 
         private void LoadSave()
         {
-            var count = listBox1.Items.Count;
+            var count = savesListBox.Items.Count;
             if (count > 0)
             {
-                File.Copy(dic[listBox1.SelectedIndex], fileName, true);
-                listBox1.SelectedIndex = count - 1;
-                label2.Text = @"Save is restored  " + dic[listBox1.SelectedIndex];
+                File.Copy(dic[savesListBox.SelectedIndex], fileName, true);
+                savesListBox.SelectedIndex = count - 1;
+                //label2.Text = @"Save is restored  " + dic[savesListBox.SelectedIndex];
+                statusLabel.Text = @"Save is restored  " + dic[savesListBox.SelectedIndex];
                 simpleSound.Play();
             }
             else
@@ -111,10 +114,10 @@
         private void DeleteButtonClick(object sender, EventArgs e)
         {
             //   foreach (string s in Directory.GetFiles(save_path))
-            if (listBox1.Items.Count > 0)
+            if (savesListBox.Items.Count > 0)
             {
-                File.Delete(dic[listBox1.SelectedIndex]);
-                listBox1.Items.Clear();
+                File.Delete(dic[savesListBox.SelectedIndex]);
+                savesListBox.Items.Clear();
                 showFiles();
             }
         }
@@ -122,7 +125,20 @@
         private void MainForm_Shown(object sender, EventArgs e)
         {
             showFiles();
-            listBox1.SelectedIndex = listBox1.Items.Count - 1;
+            savesListBox.SelectedIndex = savesListBox.Items.Count - 1;
+            textBox1.Text = fileName;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                textBox1.Text = openFileDialog1.FileName;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+                textBox2.Text = folderBrowserDialog1.SelectedPath;
         }
     }
 }
