@@ -18,7 +18,8 @@
                 "DarkSoulsII",
                 "0110000102ee03bd",
                 "DARKSII0000.sl2");
-
+        private readonly string fileNameDS1 = @"f:\Win8Docs\NBGI\DarkSouls\OvertOrange9272\DRAKS0005.sl2";
+           
         private readonly KeyboardHook hook = new KeyboardHook();
 
         private readonly SoundPlayer simpleSound;
@@ -43,7 +44,7 @@
                     BackupSave();
                     break;
                 case Keys.F8:
-                    LoadSave();
+                 //   LoadSave();
                     break;
             }
         }
@@ -64,10 +65,25 @@
         private void BackupSave()
         {
             Directory.GetFiles(save_path);
-            File.Copy(fileName, @"C:\temp\DARKSII0000.sl2" + "_" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss.f"));
-            showFiles();
+            if (DS2radioButton.Checked)
+                File.Copy(fileName, @"C:\temp\DARKSII0000.sl2" + "_" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss.f"));
+
+            if (DS1radioButton.Checked)
+            {
+                File.Copy(fileNameDS1, @"E:\temp\DS\DRAKS0005.sl2" + "_" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss.f"));
+                simpleSound.Play();
+            }
+
+            if (DS2radioButton.Checked)
+            {
+                showFiles();
+                statusLabel.Text = @"The save was backed up";
+            }
+            
+
+            
            // label2.Text = @"The save was backed up";
-            statusLabel.Text = @"The save was backed up";
+            
         }
 
         private void LoadSave()

@@ -50,8 +50,11 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.DS1radioButton = new System.Windows.Forms.RadioButton();
+            this.DS2radioButton = new System.Windows.Forms.RadioButton();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.statusStrip1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // savesListBox
@@ -190,20 +193,43 @@
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "Dark Souls 2 saves  (*.sl2)| *.sl2";
             // 
-            // checkBox1
+            // DS1radioButton
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(557, 261);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(56, 20);
-            this.checkBox1.TabIndex = 19;
-            this.checkBox1.Text = "DS1";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.DS1radioButton.AutoSize = true;
+            this.DS1radioButton.Location = new System.Drawing.Point(6, 21);
+            this.DS1radioButton.Name = "DS1radioButton";
+            this.DS1radioButton.Size = new System.Drawing.Size(55, 20);
+            this.DS1radioButton.TabIndex = 19;
+            this.DS1radioButton.TabStop = true;
+            this.DS1radioButton.Text = "DS1";
+            this.DS1radioButton.UseVisualStyleBackColor = true;
+            // 
+            // DS2radioButton
+            // 
+            this.DS2radioButton.AutoSize = true;
+            this.DS2radioButton.Location = new System.Drawing.Point(6, 47);
+            this.DS2radioButton.Name = "DS2radioButton";
+            this.DS2radioButton.Size = new System.Drawing.Size(55, 20);
+            this.DS2radioButton.TabIndex = 20;
+            this.DS2radioButton.TabStop = true;
+            this.DS2radioButton.Text = "DS2";
+            this.DS2radioButton.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.DS2radioButton);
+            this.groupBox1.Controls.Add(this.DS1radioButton);
+            this.groupBox1.Location = new System.Drawing.Point(556, 200);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(92, 81);
+            this.groupBox1.TabIndex = 21;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Selector";
             // 
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(666, 389);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.button2);
@@ -224,6 +250,8 @@
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -246,7 +274,9 @@
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel statusLabel;
         private OpenFileDialog openFileDialog1;
-        private CheckBox checkBox1;
+        private RadioButton DS1radioButton;
+        private RadioButton DS2radioButton;
+        private GroupBox groupBox1;
     }
 }
 
