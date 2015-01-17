@@ -8,7 +8,7 @@
 
     public partial class MainForm : Form
     {
-        private const string save_path = @"C:\temp";
+        private readonly string BackupsPath;
 
         private readonly Dictionary<int, string> dic;
 
@@ -22,12 +22,13 @@
         private readonly KeyboardHook hook = new KeyboardHook();
 
         private readonly SoundPlayer simpleSound;
-
+         
         public MainForm()
         {
             InitializeComponent();
             ShowInTaskbar = false;
             dic = new Dictionary<int, string>();
+            BackupsPath = txtBackupPath.Text+"\\";
             simpleSound = new SoundPlayer(@"c:\Windows\Media\chimes.wav");
             openFileDialog1.InitialDirectory = Path.Combine((Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)),"DarkSoulsII");
             hook.KeyPressed += HookKeyPressed;
@@ -48,42 +49,49 @@
             }
         }
 
-        private void showFiles()
+        private void ShowFiles()
         {
-            savesListBox.Items.Clear();
+            lstSaves.Items.Clear();
             dic.Clear();
-            foreach (var s in Directory.GetFiles(save_path))
+            foreach (var s in Directory.GetFiles(BackupsPath))
             {
-                savesListBox.Items.Add(Path.GetFileName(s) + "    " + File.GetLastWriteTime(s));
-                if (savesListBox.Items.Count - 1 >= 0)
-                    dic.Add(savesListBox.Items.Count - 1, s);
+                lstSaves.Items.Add(Path.GetFileName(s) + "    " + File.GetLastWriteTime(s));
+                if (lstSaves.Items.Count - 1 >= 0)
+                    dic.Add(lstSaves.Items.Count - 1, s);
             }
-            savesListBox.SelectedIndex = savesListBox.Items.Count - 1;
+            lstSaves.SelectedIndex = lstSaves.Items.Count - 1;
         }
 
         private void BackupSave()
         {
-            Directory.GetFiles(save_path);
-            File.Copy(fileName, @"C:\temp\DARKSII0000.sl2" + "_" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss.f"));
-            showFiles();
-           // label2.Text = @"The save was backed up";
-            statusLabel.Text = @"The save was backed up";
+            Directory.GetFiles(BackupsPath);
+            try
+            {
+                File.Copy(fileName,BackupsPath +"DARKSII0000.sl2" + "_" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss.f"));
+                statusLabel.Text = @"The save was backed up";
+            }
+            catch (IOException ioException)
+            {
+                MessageBox.Show(ioException.Message);
+            }
+            ShowFiles();
+           
         }
 
         private void LoadSave()
         {
-            var count = savesListBox.Items.Count;
+            var count = lstSaves.Items.Count;
             if (count > 0)
             {
-                File.Copy(dic[savesListBox.SelectedIndex], fileName, true);
-                savesListBox.SelectedIndex = count - 1;
+                File.Copy(dic[lstSaves.SelectedIndex], fileName, true);
+                lstSaves.SelectedIndex = count - 1;
                 //label2.Text = @"Save is restored  " + dic[savesListBox.SelectedIndex];
-                statusLabel.Text = @"Save is restored  " + dic[savesListBox.SelectedIndex];
+                statusLabel.Text = @"Save is restored  " + dic[lstSaves.SelectedIndex];
                 simpleSound.Play();
             }
             else
             {
-                MessageBox.Show(@"Backups not found");
+                MessageBox.Show(@"Backups not found in "+ BackupsPath);
             }
         }
 
@@ -100,45 +108,48 @@
             }
         }
 
-        private void loadButtonClick(object sender, EventArgs e)
+        private void LoadButtonClick(object sender, EventArgs e)
         {
             //   MessageBox.Show(DateTime.Now.ToString("yyyy-MM-dd_HH:mm:ss"));
             LoadSave();
         }
 
-        private void backupButtonClick(object sender, EventArgs e)
+        private void BackupButtonClick(object sender, EventArgs e)
         {
             BackupSave();
         }
 
         private void DeleteButtonClick(object sender, EventArgs e)
         {
-            //   foreach (string s in Directory.GetFiles(save_path))
-            if (savesListBox.Items.Count > 0)
+            //   foreach (string s in Directory.GetFiles(BackupsPath))
+            if (lstSaves.Items.Count > 0)
             {
-                File.Delete(dic[savesListBox.SelectedIndex]);
-                savesListBox.Items.Clear();
-                showFiles();
+                File.Delete(dic[lstSaves.SelectedIndex]);
+                lstSaves.Items.Clear();
+                ShowFiles();
             }
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            showFiles();
-            savesListBox.SelectedIndex = savesListBox.Items.Count - 1;
-            textBox1.Text = fileName;
+            ShowFiles();
+            lstSaves.SelectedIndex = lstSaves.Items.Count - 1;
+            txtSavesPath.Text = fileName;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void BrowseSavesButtonClick(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
-                textBox1.Text = openFileDialog1.FileName;
+                txtSavesPath.Text = openFileDialog1.FileName;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void BrowseBackupsButtonClick(object sender, EventArgs e)
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
-                textBox2.Text = folderBrowserDialog1.SelectedPath;
+                txtBackupPath.Text = folderBrowserDialog1.SelectedPath;
         }
+
+
     }
 }
+// MessageBox.Show(new DirectoryInfo(Path.Combine((Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)), "DarkSoulsII")).GetDirectories()[0].ToString());

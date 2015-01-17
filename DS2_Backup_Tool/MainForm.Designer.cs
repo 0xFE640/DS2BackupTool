@@ -35,16 +35,16 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.savesListBox = new System.Windows.Forms.ListBox();
+            this.lstSaves = new System.Windows.Forms.ListBox();
             this.LoadButton = new System.Windows.Forms.Button();
             this.DeleteButton = new System.Windows.Forms.Button();
             this.BackupButton = new System.Windows.Forms.Button();
-            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.txtSavesPath = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.txtBackupPath = new System.Windows.Forms.TextBox();
+            this.btnBrowseSaves = new System.Windows.Forms.Button();
+            this.btnBrowseBackups = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.label4 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -53,15 +53,15 @@
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // savesListBox
+            // lstSaves
             // 
-            this.savesListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.savesListBox.FormattingEnabled = true;
-            this.savesListBox.ItemHeight = 16;
-            this.savesListBox.Location = new System.Drawing.Point(12, 21);
-            this.savesListBox.Name = "savesListBox";
-            this.savesListBox.Size = new System.Drawing.Size(539, 260);
-            this.savesListBox.TabIndex = 5;
+            this.lstSaves.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lstSaves.FormattingEnabled = true;
+            this.lstSaves.ItemHeight = 16;
+            this.lstSaves.Location = new System.Drawing.Point(12, 21);
+            this.lstSaves.Name = "lstSaves";
+            this.lstSaves.Size = new System.Drawing.Size(539, 260);
+            this.lstSaves.TabIndex = 5;
             // 
             // LoadButton
             // 
@@ -72,7 +72,7 @@
             this.LoadButton.TabIndex = 6;
             this.LoadButton.Text = "Load F8";
             this.LoadButton.UseVisualStyleBackColor = true;
-            this.LoadButton.Click += new System.EventHandler(this.loadButtonClick);
+            this.LoadButton.Click += new System.EventHandler(this.LoadButtonClick);
             // 
             // DeleteButton
             // 
@@ -94,22 +94,22 @@
             this.BackupButton.TabIndex = 8;
             this.BackupButton.Text = "Backup F5";
             this.BackupButton.UseVisualStyleBackColor = true;
-            this.BackupButton.Click += new System.EventHandler(this.backupButtonClick);
+            this.BackupButton.Click += new System.EventHandler(this.BackupButtonClick);
             // 
-            // notifyIcon1
+            // notifyIcon
             // 
-            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
-            this.notifyIcon1.Text = "Dark Souls  2 Back Saves";
-            this.notifyIcon1.Visible = true;
-            this.notifyIcon1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseClick);
+            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+            this.notifyIcon.Text = "Dark Souls  2 Back Saves";
+            this.notifyIcon.Visible = true;
+            this.notifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseClick);
             // 
-            // textBox1
+            // txtSavesPath
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox1.Location = new System.Drawing.Point(113, 302);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(438, 21);
-            this.textBox1.TabIndex = 11;
+            this.txtSavesPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtSavesPath.Location = new System.Drawing.Point(113, 302);
+            this.txtSavesPath.Name = "txtSavesPath";
+            this.txtSavesPath.Size = new System.Drawing.Size(438, 21);
+            this.txtSavesPath.TabIndex = 11;
             // 
             // label3
             // 
@@ -121,36 +121,36 @@
             this.label3.TabIndex = 12;
             this.label3.Text = "DS2 Saves Path";
             // 
-            // textBox2
+            // txtBackupPath
             // 
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox2.Location = new System.Drawing.Point(113, 330);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(438, 21);
-            this.textBox2.TabIndex = 13;
-            this.textBox2.Text = "C:\\temp";
+            this.txtBackupPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtBackupPath.Location = new System.Drawing.Point(113, 330);
+            this.txtBackupPath.Name = "txtBackupPath";
+            this.txtBackupPath.Size = new System.Drawing.Size(438, 21);
+            this.txtBackupPath.TabIndex = 13;
+            this.txtBackupPath.Text = "C:\\temp";
             // 
-            // button1
+            // btnBrowseSaves
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(557, 302);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(91, 23);
-            this.button1.TabIndex = 15;
-            this.button1.Text = "Browse";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnBrowseSaves.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnBrowseSaves.Location = new System.Drawing.Point(557, 302);
+            this.btnBrowseSaves.Name = "btnBrowseSaves";
+            this.btnBrowseSaves.Size = new System.Drawing.Size(91, 23);
+            this.btnBrowseSaves.TabIndex = 15;
+            this.btnBrowseSaves.Text = "Browse";
+            this.btnBrowseSaves.UseVisualStyleBackColor = true;
+            this.btnBrowseSaves.Click += new System.EventHandler(this.BrowseSavesButtonClick);
             // 
-            // button2
+            // btnBrowseBackups
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(557, 333);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(91, 23);
-            this.button2.TabIndex = 16;
-            this.button2.Text = "Browse";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btnBrowseBackups.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnBrowseBackups.Location = new System.Drawing.Point(557, 333);
+            this.btnBrowseBackups.Name = "btnBrowseBackups";
+            this.btnBrowseBackups.Size = new System.Drawing.Size(91, 23);
+            this.btnBrowseBackups.TabIndex = 16;
+            this.btnBrowseBackups.Text = "Browse";
+            this.btnBrowseBackups.UseVisualStyleBackColor = true;
+            this.btnBrowseBackups.Click += new System.EventHandler(this.BrowseBackupsButtonClick);
             // 
             // folderBrowserDialog1
             // 
@@ -186,7 +186,6 @@
             // 
             // openFileDialog1
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "Dark Souls 2 saves  (*.sl2)| *.sl2";
             // 
             // MainForm
@@ -194,15 +193,15 @@
             this.ClientSize = new System.Drawing.Size(666, 389);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.btnBrowseBackups);
+            this.Controls.Add(this.btnBrowseSaves);
+            this.Controls.Add(this.txtBackupPath);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtSavesPath);
             this.Controls.Add(this.BackupButton);
             this.Controls.Add(this.DeleteButton);
             this.Controls.Add(this.LoadButton);
-            this.Controls.Add(this.savesListBox);
+            this.Controls.Add(this.lstSaves);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -219,16 +218,16 @@
 
         #endregion
 
-        private ListBox savesListBox;
+        private ListBox lstSaves;
         private Button LoadButton;
         private Button DeleteButton;
         private Button BackupButton;
-        private NotifyIcon notifyIcon1;
-        private TextBox textBox1;
+        private NotifyIcon notifyIcon;
+        private TextBox txtSavesPath;
         private Label label3;
-        private TextBox textBox2;
-        private Button button1;
-        private Button button2;
+        private TextBox txtBackupPath;
+        private Button btnBrowseSaves;
+        private Button btnBrowseBackups;
         private FolderBrowserDialog folderBrowserDialog1;
         private Label label4;
         private StatusStrip statusStrip1;

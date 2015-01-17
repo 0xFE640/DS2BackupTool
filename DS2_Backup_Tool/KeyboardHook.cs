@@ -15,7 +15,9 @@ public sealed class KeyboardHook : IDisposable
         window.KeyPressed += delegate(object sender, KeyPressedEventArgs args)
         {
             if (KeyPressed != null)
+            {
                 KeyPressed(this, args);
+            }
         };
     }
 
