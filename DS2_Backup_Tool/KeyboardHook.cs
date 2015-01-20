@@ -45,7 +45,7 @@ public sealed class KeyboardHook : IDisposable
     /// </summary>
     /// <param name="modifier">The modifiers that are associated with the hot key.</param>
     /// <param name="key">The key itself that is associated with the hot key.</param>
-    public void RegisterHotKey(ModifierKeys modifier, Keys key)
+    public void RegisterHotKey( Keys key, ModifierKey modifier)
     {
         // increment the counter.
         currentId = currentId + 1;
@@ -54,6 +54,9 @@ public sealed class KeyboardHook : IDisposable
         if (!RegisterHotKey(window.Handle, currentId, (uint) modifier, (uint) key))
             throw new InvalidOperationException("Couldn’t register the hot key.");
     }
+
+
+    
 
     /// <summary>
     ///     A hot key has been pressed.
@@ -91,7 +94,7 @@ public sealed class KeyboardHook : IDisposable
             {
                 // get the keys.
                 var key = (Keys) (((int) m.LParam >> 16) & 0xFFFF);
-                var modifier = (ModifierKeys) ((int) m.LParam & 0xFFFF);
+                var modifier = (ModifierKey) ((int) m.LParam & 0xFFFF);
 
                 // invoke the event to notify the parent.
                 if (KeyPressed != null)
@@ -109,15 +112,15 @@ public sealed class KeyboardHook : IDisposable
 public class KeyPressedEventArgs : EventArgs
 {
     private readonly Keys key;
-    private readonly ModifierKeys modifier;
+    private readonly ModifierKey modifier;
 
-    internal KeyPressedEventArgs(ModifierKeys modifier, Keys key)
+    internal KeyPressedEventArgs(ModifierKey modifier, Keys key)
     {
         this.modifier = modifier;
         this.key = key;
     }
 
-    public ModifierKeys Modifier
+    public ModifierKey Modifier
     {
         get { return modifier; }
     }
@@ -132,8 +135,9 @@ public class KeyPressedEventArgs : EventArgs
 ///     The enumeration of possible modifiers.
 /// </summary>
 [Flags]
-public enum ModifierKeys : uint
+public enum ModifierKey : uint
 {
+    None = 0,
     Alt = 1,
     Control = 2,
     Shift = 4,

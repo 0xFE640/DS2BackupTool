@@ -32,8 +32,8 @@
             simpleSound = new SoundPlayer(@"c:\Windows\Media\chimes.wav");
             openFileDialog1.InitialDirectory = Path.Combine((Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)),"DarkSoulsII");
             hook.KeyPressed += HookKeyPressed;
-            hook.RegisterHotKey(new ModifierKeys(), Keys.F5);
-            hook.RegisterHotKey(new ModifierKeys(), Keys.F8);
+            hook.RegisterHotKey( Keys.F5,new ModifierKey());
+            hook.RegisterHotKey( Keys.F8, new ModifierKey());
         }
 
         private void HookKeyPressed(object sender, KeyPressedEventArgs e)
