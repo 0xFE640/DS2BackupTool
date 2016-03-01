@@ -50,7 +50,13 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radioButtonDS2SOTFS = new System.Windows.Forms.RadioButton();
+            this.radioButtonDS2Orig = new System.Windows.Forms.RadioButton();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.statusStrip1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // lstSaves
@@ -68,7 +74,7 @@
             this.LoadButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.LoadButton.Location = new System.Drawing.Point(557, 60);
             this.LoadButton.Name = "LoadButton";
-            this.LoadButton.Size = new System.Drawing.Size(91, 33);
+            this.LoadButton.Size = new System.Drawing.Size(128, 33);
             this.LoadButton.TabIndex = 6;
             this.LoadButton.Text = "Load F8";
             this.LoadButton.UseVisualStyleBackColor = true;
@@ -79,7 +85,7 @@
             this.DeleteButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.DeleteButton.Location = new System.Drawing.Point(557, 99);
             this.DeleteButton.Name = "DeleteButton";
-            this.DeleteButton.Size = new System.Drawing.Size(91, 33);
+            this.DeleteButton.Size = new System.Drawing.Size(128, 33);
             this.DeleteButton.TabIndex = 7;
             this.DeleteButton.Text = "Delete";
             this.DeleteButton.UseVisualStyleBackColor = true;
@@ -90,7 +96,7 @@
             this.BackupButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.BackupButton.Location = new System.Drawing.Point(557, 21);
             this.BackupButton.Name = "BackupButton";
-            this.BackupButton.Size = new System.Drawing.Size(91, 33);
+            this.BackupButton.Size = new System.Drawing.Size(128, 33);
             this.BackupButton.TabIndex = 8;
             this.BackupButton.Text = "Backup F5";
             this.BackupButton.UseVisualStyleBackColor = true;
@@ -172,7 +178,7 @@
             this.statusLabel});
             this.statusStrip1.Location = new System.Drawing.Point(0, 367);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(666, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(698, 22);
             this.statusStrip1.TabIndex = 18;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -188,9 +194,52 @@
             // 
             this.openFileDialog1.Filter = "Dark Souls 2 saves  (*.sl2)| *.sl2";
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.radioButtonDS2SOTFS);
+            this.groupBox1.Controls.Add(this.radioButtonDS2Orig);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.groupBox1.Location = new System.Drawing.Point(557, 138);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(128, 87);
+            this.groupBox1.TabIndex = 19;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Version";
+            // 
+            // radioButtonDS2SOTFS
+            // 
+            this.radioButtonDS2SOTFS.AutoSize = true;
+            this.radioButtonDS2SOTFS.Location = new System.Drawing.Point(6, 47);
+            this.radioButtonDS2SOTFS.Name = "radioButtonDS2SOTFS";
+            this.radioButtonDS2SOTFS.Size = new System.Drawing.Size(100, 20);
+            this.radioButtonDS2SOTFS.TabIndex = 0;
+            this.radioButtonDS2SOTFS.Text = "DS2 SOTFS";
+            this.radioButtonDS2SOTFS.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonDS2Orig
+            // 
+            this.radioButtonDS2Orig.AutoSize = true;
+            this.radioButtonDS2Orig.Checked = true;
+            this.radioButtonDS2Orig.Location = new System.Drawing.Point(6, 21);
+            this.radioButtonDS2Orig.Name = "radioButtonDS2Orig";
+            this.radioButtonDS2Orig.Size = new System.Drawing.Size(101, 20);
+            this.radioButtonDS2Orig.TabIndex = 0;
+            this.radioButtonDS2Orig.TabStop = true;
+            this.radioButtonDS2Orig.Text = "DS2 Original";
+            this.radioButtonDS2Orig.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(563, 241);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(122, 22);
+            this.numericUpDown1.TabIndex = 20;
+            // 
             // MainForm
             // 
-            this.ClientSize = new System.Drawing.Size(666, 389);
+            this.ClientSize = new System.Drawing.Size(698, 389);
+            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.btnBrowseBackups);
@@ -211,6 +260,9 @@
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -233,6 +285,10 @@
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel statusLabel;
         private OpenFileDialog openFileDialog1;
+        private GroupBox groupBox1;
+        private RadioButton radioButtonDS2SOTFS;
+        private RadioButton radioButtonDS2Orig;
+        private NumericUpDown numericUpDown1;
     }
 }
 
