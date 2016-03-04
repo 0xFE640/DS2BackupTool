@@ -5,32 +5,20 @@
     using System.IO;
     using System.Media;
     using System.Windows.Forms;
+    
 
-
-     
 
     public partial class MainForm : Form
     {
-        //private readonly string filePath =
-        //    Path.Combine(
-        //        (Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)),
-        //        "DarkSoulsII",
-        //        "0110000102ee03bd", //TODO: Detect folder
-        //        "DARKSII0000.sl2"); 
-
+        
         //TODO: Remove global variables
 
-
-      
-
         private readonly string BackupsPath;
-        string vFileName; 
+        string fileVersion; 
         string idFolder;
         private readonly Dictionary<int, string> dic;
         private readonly KeyboardHook hook = new KeyboardHook();
         private readonly SoundPlayer simpleSound;
-
-
 
 
          
@@ -45,9 +33,10 @@
             hook.KeyPressed += HookKeyPressed;
             hook.RegisterHotKey(Keys.F5, new ModifierKey());
             hook.RegisterHotKey(Keys.F8, new ModifierKey());
-            hook.RegisterHotKey(Keys.Delete,new ModifierKey());
-             
+            hook.RegisterHotKey(Keys.Delete, new ModifierKey());
+
         }
+
 
         private string GetSavesLocation()
         {
@@ -56,15 +45,13 @@
 
 
             if (radioButtonDS2Orig.Checked)
-                vFileName = ds2o;
+                fileVersion = ds2o;
             if (radioButtonDS2SOTFS.Checked)
-                vFileName = ds2s;
+                fileVersion = ds2s;
 
             idFolder = Directory.GetDirectories(Path.Combine((Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)), "DarkSoulsII"))[0];
 
-            //  MessageBox.Show(idFolder);
-
-            return Path.Combine(idFolder, vFileName);
+            return Path.Combine(idFolder, fileVersion);
         }
                     
         private void HookKeyPressed(object sender, KeyPressedEventArgs e)
@@ -83,33 +70,41 @@
             }
         }
 
-        private void ShowFiles()
+        private void UpdateList()
         {
-            lstSaves.Items.Clear();
+            //string ds2version="";
+            //if (radioButtonDS2Orig.Checked)
+            //    ds2version = "Dark Souls 2";
+            //if (radioButtonDS2SOTFS.Checked)
+            //    ds2version = "Dark Souls 2 SOTFS";
+
+            dataGridView1.Rows.Clear();
             dic.Clear();
             foreach (var file in Directory.GetFiles(BackupsPath))
             {
-                lstSaves.Items.Add(Path.GetFileName(file) + "    " + File.GetLastWriteTime(file));
-                if (lstSaves.Items.Count - 1 >= 0)
-                    dic.Add(lstSaves.Items.Count - 1, file);
+                dataGridView1.Rows.Add(Path.GetFileName(GetSavesLocation()), Path.GetFileName(file), File.GetLastWriteTime(file));
+                if (dataGridView1.Rows.Count-1 >=0)
+                    dic.Add(dataGridView1.Rows.Count - 1, file);
             }
-            lstSaves.SelectedIndex = lstSaves.Items.Count - 1;
+
+            if (dataGridView1.Rows.Count>0)
+                dataGridView1.Rows[dataGridView1.Rows.Count-1].Selected = true;
+
         }
 
         private void BackupSave()
         {
-            Directory.GetFiles(BackupsPath);
+           // Directory.GetFiles(BackupsPath);
             try
             {
-                //File.Copy(GetSavesPath(),BackupsPath +"DARKSII0000.sl2" + "_" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss,f"));
-                File.Copy(GetSavesLocation(), BackupsPath +DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss,f") + " " +"DARKSII0000.sl2" );
+                File.Copy(GetSavesLocation(), BackupsPath +DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss,f") /* +"DARKSII0000.sl2"*/ );
                 statusLabel.Text = @"The save was backed up";
             }
             catch (IOException ioException)
             {
                 MessageBox.Show(ioException.Message);
             }
-            ShowFiles();
+            UpdateList();
            
         }
 
@@ -117,16 +112,17 @@
         {
             if (!File.Exists(GetSavesLocation()))
             {
-                MessageBox.Show("Path "+GetSavesLocation()+" doesn't exist");
+                MessageBox.Show("Path " + GetSavesLocation() + " doesn't exist");
                 return;
             }
-            var count = lstSaves.Items.Count;
+            var count = dataGridView1.Rows.Count;
+
             if (count > 0)
             {
-                File.Copy(dic[lstSaves.SelectedIndex], GetSavesLocation(), true);
-                lstSaves.SelectedIndex = count - 1;
+                File.Copy(dic[dataGridView1.CurrentCell.RowIndex], GetSavesLocation(), true);
+                dataGridView1.Rows[dataGridView1.Rows.Count-1].Selected = true;
                 //label2.Text = @"Save is restored  " + dic[savesListBox.SelectedIndex];
-                statusLabel.Text = @"Save is restored  " + dic[lstSaves.SelectedIndex];
+               // statusLabel.Text = @"Save is restored  " + dic[lstSaves.SelectedIndex];
                 simpleSound.Play();
             }
             else
@@ -135,7 +131,7 @@
             }
         }
 
-        private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
+        private void TrayIconClick(object sender, MouseEventArgs e)
         {
             Show();
             if (WindowState == FormWindowState.Minimized)
@@ -150,7 +146,6 @@
 
         private void LoadButtonClick(object sender, EventArgs e)
         {
-            //   MessageBox.Show(DateTime.Now.ToString("yyyy-MM-dd_HH:mm:ss"));
             LoadSave();
         }
 
@@ -161,18 +156,16 @@
 
         private void DeleteButtonClick(object sender, EventArgs e)
         {
-            if (lstSaves.Items.Count > 0)
+            if (dataGridView1.Rows.Count > 0)
             {
-                File.Delete(dic[lstSaves.SelectedIndex]);
-                lstSaves.Items.Clear();
-                ShowFiles();
+                File.Delete(dic[dataGridView1.CurrentCell.RowIndex]);
+                UpdateList();
             }
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            ShowFiles();
-            lstSaves.SelectedIndex = lstSaves.Items.Count - 1;
+            UpdateList();
             txtSavesPath.Text = GetSavesLocation();
         }
 
@@ -188,7 +181,6 @@
                 txtBackupPath.Text = folderBrowserDialog1.SelectedPath;
         }
 
-
+       
     }
 }
-// MessageBox.Show(new DirectoryInfo(Path.Combine((Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)), "DarkSoulsII")).GetDirectories()[0].ToString());

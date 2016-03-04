@@ -6,19 +6,20 @@ using System.IO;
 
 namespace DS2_Backup_Tool
 {
-    class Logic
+  class Controller
     {
-        private readonly string BackupsPath;
+        private readonly string BackupsPath = @"C:\temp\";
         string vFileName;
         string idFolder;
         private readonly Dictionary<int, string> dic;
         private readonly KeyboardHook hook = new KeyboardHook();
         private readonly SoundPlayer simpleSound;
 
-        public enum DS2Vesrsion { DS2Orig, DS2SOTFS}
+        public  enum DS2Vesrsion { DS2Orig, DS2SOTFS}
+       
 
 
-    Logic()
+   public   Controller()
         {
             hook.KeyPressed += HookKeyPressed;
             hook.RegisterHotKey(Keys.F5, new ModifierKey());
@@ -32,7 +33,7 @@ namespace DS2_Backup_Tool
             switch (e.Key)
             {
                 case Keys.F5:
-       //             BackupSave();
+                    BackupSave();
                     break;
                 case Keys.F8:
                     //LoadSave();
@@ -43,6 +44,12 @@ namespace DS2_Backup_Tool
             }
         }
 
+        //private DS2Vesrsion GetVersion()
+        //{
+            
+        //    return DS2Vesrsion.DS2Orig;
+
+        //}
 
         private string GetSaveLocation(DS2Vesrsion ds2Ver)
         {
@@ -60,7 +67,7 @@ namespace DS2_Backup_Tool
         }
 
 
-        private void ShowFiles(ListBox lstSaves)
+        public void UpdateList(ListBox lstSaves)
         {
             lstSaves.Items.Clear();
             dic.Clear();
@@ -86,9 +93,31 @@ namespace DS2_Backup_Tool
             {
                 MessageBox.Show(ioException.Message);
             }
-            ShowFiles();
+            //ShowFiles();
 
         }
+
+        //private void LoadSave(ListBox lstSaves)
+        //{
+        //    if (!File.Exists(GetSaveLocation()))
+        //    {
+        //        MessageBox.Show("Path " + GetSaveLocation() + " doesn't exist");
+        //        return;
+        //    }
+        //    var count = lstSaves.Items.Count;
+        //    if (count > 0)
+        //    {
+        //        File.Copy(dic[lstSaves.SelectedIndex], GetSavesLocation(), true);
+        //        lstSaves.SelectedIndex = count - 1;
+        //        //label2.Text = @"Save is restored  " + dic[savesListBox.SelectedIndex];
+        //  //      statusLabel.Text = @"Save is restored  " + dic[lstSaves.SelectedIndex];
+        //        simpleSound.Play();
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show(@"Backups not found in " + BackupsPath);
+        //    }
+        //}
 
 
 
