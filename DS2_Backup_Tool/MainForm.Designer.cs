@@ -53,14 +53,14 @@
             this.radioButtonDS2SOTFS = new System.Windows.Forms.RadioButton();
             this.radioButtonDS2Orig = new System.Windows.Forms.RadioButton();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.DGView = new System.Windows.Forms.DataGridView();
             this.Version = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CreateTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ModifiedTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DGView)).BeginInit();
             this.SuspendLayout();
             // 
             // LoadButton
@@ -229,35 +229,38 @@
             this.numericUpDown1.Size = new System.Drawing.Size(129, 22);
             this.numericUpDown1.TabIndex = 20;
             // 
-            // dataGridView1
+            // DGView
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AllowUserToResizeColumns = false;
-            this.dataGridView1.AllowUserToResizeRows = false;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.DGView.AllowUserToAddRows = false;
+            this.DGView.AllowUserToDeleteRows = false;
+            this.DGView.AllowUserToResizeColumns = false;
+            this.DGView.AllowUserToResizeRows = false;
+            this.DGView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DGView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Version,
             this.CreateTime,
             this.ModifiedTime});
-            this.dataGridView1.Location = new System.Drawing.Point(15, 21);
-            this.dataGridView1.MultiSelect = false;
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(536, 404);
-            this.dataGridView1.TabIndex = 21;
+            this.DGView.Location = new System.Drawing.Point(15, 21);
+            this.DGView.MultiSelect = false;
+            this.DGView.Name = "DGView";
+            this.DGView.ReadOnly = true;
+            this.DGView.RowHeadersVisible = false;
+            this.DGView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.DGView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DGView.Size = new System.Drawing.Size(536, 404);
+            this.DGView.TabIndex = 21;
             // 
             // Version
             // 
+            this.Version.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.Version.FillWeight = 76.14214F;
             this.Version.HeaderText = "Version";
             this.Version.Name = "Version";
             this.Version.ReadOnly = true;
             this.Version.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Version.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Version.Width = 67;
             // 
             // CreateTime
             // 
@@ -278,7 +281,7 @@
             // MainForm
             // 
             this.ClientSize = new System.Drawing.Size(698, 517);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.DGView);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.statusStrip1);
@@ -303,7 +306,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DGView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -328,7 +331,7 @@
         private RadioButton radioButtonDS2SOTFS;
         private RadioButton radioButtonDS2Orig;
         private NumericUpDown numericUpDown1;
-        private DataGridView dataGridView1;
+        private DataGridView DGView;
         private DataGridViewTextBoxColumn Version;
         private DataGridViewTextBoxColumn CreateTime;
         private DataGridViewTextBoxColumn ModifiedTime;

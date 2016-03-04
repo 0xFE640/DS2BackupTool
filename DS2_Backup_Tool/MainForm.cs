@@ -77,18 +77,26 @@
             //    ds2version = "Dark Souls 2";
             //if (radioButtonDS2SOTFS.Checked)
             //    ds2version = "Dark Souls 2 SOTFS";
+            string version = "";
 
-            dataGridView1.Rows.Clear();
+            DGView.Rows.Clear();
             dic.Clear();
             foreach (var file in Directory.GetFiles(BackupsPath))
             {
-                dataGridView1.Rows.Add(Path.GetFileName(GetSavesLocation()), Path.GetFileName(file), File.GetLastWriteTime(file));
-                if (dataGridView1.Rows.Count-1 >=0)
-                    dic.Add(dataGridView1.Rows.Count - 1, file);
+
+                if (Path.GetFileName(file).Contains("SOFS"))
+                    version = "Dark Souls 2 SOTFS";
+                else
+                    version = "Dark Souls 2";
+
+                DGView.Rows.Add(version,File.GetCreationTime(file), File.GetLastWriteTime(file));
+                if (DGView.Rows.Count-1 >=0)
+                    dic.Add(DGView.Rows.Count - 1, file);
             }
 
-            if (dataGridView1.Rows.Count>0)
-                dataGridView1.Rows[dataGridView1.Rows.Count-1].Selected = true;
+            if (DGView.Rows.Count >= 0)
+                DGView.Rows[DGView.Rows.Count - 1].Cells[0].Selected = true;
+            
 
         }
 
@@ -97,7 +105,8 @@
            // Directory.GetFiles(BackupsPath);
             try
             {
-                File.Copy(GetSavesLocation(), BackupsPath +DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss,f") /* +"DARKSII0000.sl2"*/ );
+                File.Copy(GetSavesLocation(), BackupsPath + Path.GetFileName(GetSavesLocation())
+                    + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss,f") /* +"DARKSII0000.sl2"*/ );
                 statusLabel.Text = @"The save was backed up";
             }
             catch (IOException ioException)
@@ -115,12 +124,12 @@
                 MessageBox.Show("Path " + GetSavesLocation() + " doesn't exist");
                 return;
             }
-            var count = dataGridView1.Rows.Count;
+            var count = DGView.Rows.Count;
 
             if (count > 0)
             {
-                File.Copy(dic[dataGridView1.CurrentCell.RowIndex], GetSavesLocation(), true);
-                dataGridView1.Rows[dataGridView1.Rows.Count-1].Selected = true;
+                File.Copy(dic[DGView.CurrentCell.RowIndex], GetSavesLocation(), true);
+                DGView.Rows[DGView.Rows.Count-1].Selected = true;
                 //label2.Text = @"Save is restored  " + dic[savesListBox.SelectedIndex];
                // statusLabel.Text = @"Save is restored  " + dic[lstSaves.SelectedIndex];
                 simpleSound.Play();
@@ -156,9 +165,9 @@
 
         private void DeleteButtonClick(object sender, EventArgs e)
         {
-            if (dataGridView1.Rows.Count > 0)
+            if (DGView.Rows.Count > 0)
             {
-                File.Delete(dic[dataGridView1.CurrentCell.RowIndex]);
+                File.Delete(dic[DGView.CurrentCell.RowIndex]);
                 UpdateList();
             }
         }
